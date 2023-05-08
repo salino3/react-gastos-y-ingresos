@@ -12,7 +12,13 @@ interface DELETE_TRANSACTION {
 export interface Transaction {
   id?: number;
   description: string;
-  amount: number;
+  amount: number | string;
+}
+
+export interface TransactionOperation {
+  id?: number;
+  description: string;
+  amount: number ;
 }
 
 export type All_Actions = ADD_TRANSACTION | DELETE_TRANSACTION;

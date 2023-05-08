@@ -7,23 +7,24 @@ export const ExpenseChart: React.FC = () => {
  const {state} = useGlobalState();
  const {transactions} = state;
 
-//  const total: number =  transactions
-//     .reduce((acc: number, item: any) => (acc += item.amount), 0);
 
-
-const totalIncome: number = Number(transactions
-  .filter((item: Transaction) => item.amount > 0)
-  .reduce((acc: number, item: Transaction) => (acc += item.amount), 0)
-  .toFixed(2));
+const totalIncome: number = Number(
+  transactions
+    .filter((item: Transaction) => Number(item.amount) > 0)
+    .reduce((acc: number, item: Transaction) => (acc += Number(item.amount)), 0)
+    .toFixed(2)
+);
 
 
  const totalExpense: number = Number(transactions
-     .filter((item: Transaction) => item.amount < 0)
-     .reduce((acc: number, item: Transaction) => (acc += item.amount), 0)
+     .filter((item: Transaction) =>  Number(item.amount) < 0)
+     .reduce((acc: number, item: Transaction) => (acc +=  Number(item.amount)), 0)
      .toFixed(2)) * -1;
       
-      const totalExpensesPercentage = Math.round((totalExpense / totalIncome) * 100);
-      
+      // const totalExpensesPercentage = Math.round((totalExpense / totalIncome) * 100);
+      const totalExpensesPercentage =
+        totalIncome === 0 ? 0 : Math.round((totalExpense / totalIncome) * 100);
+
       const totalIncomePercentage = 100 - totalExpensesPercentage;
 
   return (
