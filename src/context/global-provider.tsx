@@ -1,5 +1,5 @@
 import React from 'react';
-import { Context, AppReducer } from ".";
+import { Context, AppReducer, Transaction } from ".";
 import { initialState } from '../api/data';
 
 interface Props {
@@ -12,11 +12,12 @@ export const useGlobalState = () => {
 };
 
 export const MyProvider: React.FC<Props> = ({children}) => {
+
 const [state, dispatch] = React.useReducer(AppReducer, initialState, () => {
-  const localData: any = sessionStorage.getItem("transactions");
-const parsedData: any = localData !== null ? JSON.parse(localData) : null;
+  const localData: string | null = sessionStorage.getItem("transactions");
+  const parsedData: any = localData !== null ? JSON.parse(localData) : null;
   return parsedData || initialState;
-});
+ });
 
 
 
@@ -25,14 +26,14 @@ const parsedData: any = localData !== null ? JSON.parse(localData) : null;
   }, [state]);
   
 
-  const addTransaction = (transactions: any) => {
+  const addTransaction = (transaction: Transaction) => {
     dispatch({
       type: "ADD_TRANSACTION",
-      payload: transactions,
+      payload: transaction,
     });
   };
 
-  const deleteTransaction = (id: any) => {
+  const deleteTransaction = (id: number) => {
     dispatch({
       type: "DELETE_TRANSACTION",
       payload: id,

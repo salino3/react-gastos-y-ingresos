@@ -1,5 +1,5 @@
 import React from "react";
-import { useGlobalState } from "../../context";
+import { Transaction, useGlobalState } from "../../context";
 
 export const TransactionForm: React.FC = () => {
   const { addTransaction, state } = useGlobalState();
@@ -9,24 +9,29 @@ export const TransactionForm: React.FC = () => {
     transactions[transactions.length - 1]?.id
   );
 
+  const [transaction, setTransaction] = React.useState<Transaction>({
+    id: transactions[transactions.length - 1]?.id,
+    description: "",
+    amount: 0,
+  })
   const [description, setDescription] = React.useState<string>("");
   const [amount, setAmount] = React.useState<number>(0);
 
  React.useEffect(() => {
   setNewIdState(transactions[transactions.length - 1]?.id);
- }, [newIdState]);
+ }, [transactions]);
 
+console.log(newIdState);
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (
     event: React.FormEvent<HTMLFormElement>
   ) => {
     event.preventDefault();
 
-    // setNewIdState((prevId: any) => prevId + 1);
     newIdState++
+console.log("dentro onsSubmit", newIdState);
 
     addTransaction({
-      // id: window.crypto.randomUUID(),
       id: newIdState ? newIdState : 1, 
       description,
       amount: +amount,
@@ -61,9 +66,6 @@ export const TransactionForm: React.FC = () => {
     </div>
   );
 };
-
-
-
 
 
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import {VictoryPie, VictoryLabel } from 'victory';
-import { useGlobalState } from '../../context';
+import { Transaction, useGlobalState } from '../../context';
 
 export const ExpenseChart: React.FC = () => {
 
@@ -11,17 +11,16 @@ export const ExpenseChart: React.FC = () => {
 //     .reduce((acc: number, item: any) => (acc += item.amount), 0);
 
 
-const totalIncome: any = transactions
-  .filter((item: any) => item.amount > 0)
-  .reduce((acc: number, item: any) => (acc += item.amount), 0)
-  .toFixed(2);
+const totalIncome: number = Number(transactions
+  .filter((item: Transaction) => item.amount > 0)
+  .reduce((acc: number, item: Transaction) => (acc += item.amount), 0)
+  .toFixed(2));
 
 
- const totalExpense: any =
-   transactions
-     .filter((item: any) => item.amount < 0)
-     .reduce((acc: any, item: any) => (acc += item.amount), 0)
-     .toFixed(2) * -1;
+ const totalExpense: number = Number(transactions
+     .filter((item: Transaction) => item.amount < 0)
+     .reduce((acc: number, item: Transaction) => (acc += item.amount), 0)
+     .toFixed(2)) * -1;
       
       const totalExpensesPercentage = Math.round((totalExpense / totalIncome) * 100);
       
