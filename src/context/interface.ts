@@ -15,11 +15,6 @@ export interface Transaction {
   amount: number | string;
 }
 
-export interface TransactionOperation {
-  id?: number;
-  description: string;
-  amount: number ;
-}
 
 export type All_Actions = ADD_TRANSACTION | DELETE_TRANSACTION;
 
@@ -33,6 +28,8 @@ export interface MyState {
   state: State;
   addTransaction: (transaction: Transaction) => void;
   deleteTransaction: (id: number) => void;
+  toggle: boolean;
+  setToggle: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 

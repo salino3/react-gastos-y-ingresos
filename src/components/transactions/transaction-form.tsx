@@ -2,15 +2,14 @@ import React from "react";
 import { Transaction, useGlobalState } from "../../context";
 
 export const TransactionForm: React.FC = () => {
-  const { addTransaction, state } = useGlobalState();
+  const { addTransaction, state, setToggle } = useGlobalState();
   const { transactions} = state;
   
-  let [newIdState, setNewIdState] = React.useState<any>(
+  let [newIdState, setNewIdState] = React.useState<number | undefined>(
     transactions[transactions.length - 1]?.id
   );
 
   const [transaction, setTransaction] = React.useState<Transaction>({
-    // id: transactions[transactions.length - 1]?.id,
     id: newIdState ? newIdState : 1,
     description: "",
     amount: "",
@@ -20,7 +19,6 @@ export const TransactionForm: React.FC = () => {
   setNewIdState(transactions[transactions.length - 1]?.id);
  }, [transactions]);
 
-console.log(newIdState);
 
 
 const handleChange = (field: keyof Transaction) => (event: any): void => {
@@ -28,14 +26,15 @@ const handleChange = (field: keyof Transaction) => (event: any): void => {
   setTransaction({...transaction, [field]: event.target.value })
 };
 
-
 //
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (
     event: React.FormEvent<HTMLFormElement>
   ) => {
     event.preventDefault();
 
+    if(newIdState){ 
     newIdState++
+   };
 
     addTransaction({
       id: newIdState ? newIdState : 1,
@@ -43,6 +42,7 @@ const handleChange = (field: keyof Transaction) => (event: any): void => {
       amount: +transaction.amount,
     });
 
+    setToggle(true);
     console.log(transaction);
     setTransaction({
       id: 1,
