@@ -19,6 +19,7 @@ const [state, dispatch] = React.useReducer(AppReducer, initialState, () => {
   return parsedData || initialState;
  });
 
+ const [toggle, setToggle] = React.useState<boolean>(false);
 
 
   React.useEffect(() => {
@@ -41,7 +42,16 @@ const [state, dispatch] = React.useReducer(AppReducer, initialState, () => {
   };
 
   return (
-    <Context.Provider value={{ state, addTransaction, deleteTransaction, dispatch }}>
+    <Context.Provider
+      value={{
+        state,
+        dispatch,
+        addTransaction,
+        deleteTransaction,
+        toggle,
+        setToggle,
+      }}
+    >
       {children}
     </Context.Provider>
   );

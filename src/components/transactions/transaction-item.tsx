@@ -1,19 +1,20 @@
 import React from 'react';
+import { Transaction } from '../../context';
 
 interface Props {
-    item: any;
-    deleteTransaction: (id: any) => {}
+  item: Transaction;
+  onClick: React.MouseEventHandler<HTMLButtonElement>;
 }
 
 export const TransactionItem: React.FC<Props> = (props) => {
- const {item, deleteTransaction} = props;
+ const {item, onClick} = props;
 
   return (
     <li>
       <p>{item.id}</p>
       <p>{item.description}</p>
       <span>{item.amount}</span>
-      <button onClick={() => deleteTransaction(item.id)}>X</button>
+      <button onClick={onClick}>X</button>
     </li>
   );
 }

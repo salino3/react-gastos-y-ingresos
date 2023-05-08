@@ -1,24 +1,30 @@
 import React from 'react';
-import { useGlobalState } from '../../context';
+import { Transaction, useGlobalState } from '../../context';
 import { TransactionItem } from './transaction-item';
 
 export const TransactionList: React.FC = () => {
- 
-  const { state, deleteTransaction } = useGlobalState();
-  const {transactions} = state;
+  const { state, deleteTransaction, setToggle } = useGlobalState();
+  const { transactions } = state;
 
-  console.log(transactions);
+
+  function handleClick(item: Transaction) {
+    if (item.id !== undefined) {
+      setToggle(true);
+      deleteTransaction(item.id);
+    };
+  };
+
   return (
     <>
       <h3>History</h3>
       <ul>
-       {transactions &&
-        transactions.map((item: any) => (
-          <TransactionItem
-          key={item.id}
-          item={item}
-          deleteTransaction={deleteTransaction}
-          />
+        {transactions &&
+          transactions.map((item: Transaction) => (
+            <TransactionItem
+              key={item.id}
+              item={item}
+              onClick={() => item.id && handleClick(item)}
+            />
           ))}
       </ul>
     </>

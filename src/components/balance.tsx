@@ -1,13 +1,13 @@
 import React from 'react';
-import { useGlobalState } from '../context';
+import { Transaction, useGlobalState } from '../context';
 
 export const Balance: React.FC = () => {
 
  const {state} = useGlobalState();
  const {transactions} = state;
 
- const amount = transactions.map((transaction: any) => transaction.amount);
- const total = amount.reduce((acc: number, item: number) => (acc += item), 0)
+ const amount = transactions.map((transaction: Transaction) => transaction.amount);
+ const total: number = amount.reduce((acc: number, item) => (acc += Number(item)), 0)
 
   return (
     <>
